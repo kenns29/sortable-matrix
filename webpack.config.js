@@ -1,28 +1,28 @@
-const { resolve } = require("path");
-const webpack = require("webpack");
+const {resolve} = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: [resolve("./src/index.js")]
+    app: [resolve('./src/index.js')]
   },
-  devtool: "source-maps",
+  devtool: 'source-maps',
   output: {
-    path: resolve("./dist"),
-    filename: "sortable-matrix.js",
-    library: ["stm"],
-    libraryTarget: "umd",
-    publicPath: "/"
+    path: resolve('./dist'),
+    filename: 'sortable-matrix.js',
+    library: ['stm'],
+    libraryTarget: 'umd',
+    publicPath: '/'
   },
   resolve: {
-    extensions: [".js"]
+    extensions: ['.js']
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         exclude: [/node_modules/],
-        include: [resolve(".")]
+        include: [resolve('.')]
       }
     ]
   }

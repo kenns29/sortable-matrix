@@ -1,3 +1,3 @@
-import matrix from "./matrix";
-import sort2d from "./sort2d";
-export { matrix as default, sort2d };
+import matrix from './matrix';
+import {sort2d, flattener, links2generator} from './utils';
+export {matrix as default, sort2d, flattener, links2generator};

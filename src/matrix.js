@@ -18,7 +18,7 @@ export default function matrix() {
 
   var row_order = []; //stores the row indexes with customized order
   var col_order = []; //stores the col indexes with customized order
-  var order_on_dist = true;
+  var order_on_dist = false;
   function cell_value(node) {
     return node;
   }
@@ -43,7 +43,7 @@ export default function matrix() {
   }
   function row_vector(index) {
     if (!row_index_active[index])
-      throw "Error, row on index " + index + " is not active";
+      throw 'Error, row on index ' + index + ' is not active';
     var row = [];
     matrix[index].forEach(function(value, idx) {
       if (col_index_active[index]) {
@@ -55,7 +55,7 @@ export default function matrix() {
 
   function col_vector(index) {
     if (!col_index_active[index])
-      throw "Error, col on index " + index + " is not active";
+      throw 'Error, col on index ' + index + ' is not active';
     var col = [];
     matrix.forEach(function(row, idx) {
       if (row_index_active[idx]) {
@@ -239,15 +239,15 @@ export default function matrix() {
   }
 
   function order_rows_by_array(_) {
-    if (_.length !== row_order.length) throw Error("length of rows not match.");
+    if (_.length !== row_order.length) throw Error('length of rows not match.');
     row_order = _;
   }
   function order_cols_by_array(_) {
-    if (_.length !== col_order.length) throw Error("length of cols not match.");
+    if (_.length !== col_order.length) throw Error('length of cols not match.');
     col_order = _;
   }
   function order_rows(_) {
-    if (Object.prototype.toString.call(_) === "[object Array]") {
+    if (Object.prototype.toString.call(_) === '[object Array]') {
       order_rows_by_array(_);
     } else {
       order_rows_by_dist(_);
@@ -255,7 +255,7 @@ export default function matrix() {
   }
 
   function order_cols(_) {
-    if (Object.prototype.toString.call(_) === "[object Array]") {
+    if (Object.prototype.toString.call(_) === '[object Array]') {
       order_cols_by_array(_);
     } else {
       order_cols_by_dist(_);
@@ -263,7 +263,7 @@ export default function matrix() {
   }
 
   function order_rows_by_id(_) {
-    if (Object.prototype.toString.call(_) === "[object Array]") {
+    if (Object.prototype.toString.call(_) === '[object Array]') {
       var index_array = Array(_.length);
       for (var i = 0; i < _.length; i++) {
         index_array[i] = row_indexes[_[i]];
@@ -273,7 +273,7 @@ export default function matrix() {
   }
 
   function order_cols_by_id(_) {
-    if (Object.prototype.toString.call(_) === "[object Array]") {
+    if (Object.prototype.toString.call(_) === '[object Array]') {
       var index_array = Array(_.length);
       for (var i = 0; i < _.length; i++) {
         index_array[i] = col_indexes[_[i]];
@@ -356,8 +356,8 @@ export default function matrix() {
   /*
 	 * Return Object
 	 */
-  var ret = {};
-  ret.matrix = function(_) {
+  const ret = {};
+  ret.matrix_data = function(_) {
     if (arguments.length > 0) return (matrix = _), maker();
     else return matrix;
   };
@@ -377,7 +377,7 @@ export default function matrix() {
   };
   ret.cell_value = function(_) {
     if (arguments.length > 0) {
-      if (typeof _ === "function") cell_value = _;
+      if (typeof _ === 'function') cell_value = _;
       else
         cell_value = function(d) {
           return d;
