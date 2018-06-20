@@ -1,7 +1,10 @@
 import Matrix from '../matrix';
+import functor from './functor';
+
 export default function(_matrix) {
   let matrix = _matrix || Matrix();
   let boundary = {x0: -1, x1: -1, y0: -1, y1: -1};
+  let value_accessor = functor();
   function cells() {
     const r_cells = [];
     const row_id_order = matrix.row_id_order();
@@ -20,13 +23,13 @@ export default function(_matrix) {
           const col_id = col_id_order[j];
           if (matrix.is_col_id_active(col_id)) {
             const data = matrix.cell_by_id(row_id, col_id);
-            const v = value(data);
+            const value = value_accessor(data);
             r_cells.push({
               id: row_id + '-' + col_id,
               row_id,
               col_id,
               data,
-              value: v,
+              value,
               row_index,
               col_index,
               row_index_absolute: i,
@@ -63,6 +66,11 @@ export default function(_matrix) {
   };
   flatten.boundary = function(_) {
     return arguments.length ? ((boundary = _), flatten) : boundary;
+  };
+  flatten.value = function(_) {
+    return arguments.length
+      ? ((value_accessor = functor(_)), flatten)
+      : value_accessor;
   };
   return flatten;
 }
