@@ -2,7 +2,13 @@
 
 ## Install
 
-Install all dependencies by
+```
+npm install sortable-matrix
+```
+
+## Build
+
+You can also build the code manually. First, install all dependencies by
 
 ```
 npm install
