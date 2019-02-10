@@ -52,14 +52,20 @@ export default function(_matrix) {
     let {y0, y1} = boundary;
     if (y0 < 0) y0 = 0;
     if (y1 < 0 || y1 > row_id_order.length) y1 = row_id_order.length;
-    return matrix.row_id_order().slice(y0, y1);
+    return matrix
+      .row_id_order()
+      .slice(y0, y1)
+      .filter(id => matrix.is_row_id_active(id));
   };
   flatten.cols = function() {
     const col_id_order = matrix.col_id_order();
     let {x0, x1} = boundary;
     if (x0 < 0) x0 = 0;
     if (x1 < 0 || x1 > col_id_order.length) x1 = col_id_order.length;
-    return matrix.col_id_order().slice(x0, x1);
+    return matrix
+      .col_id_order()
+      .slice(x0, x1)
+      .filter(id => matrix.is_col_id_active(id));
   };
   flatten.matrix = function(_) {
     return arguments.length ? ((matrix = _), flatten) : matrix;
