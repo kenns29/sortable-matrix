@@ -2,6 +2,9 @@
  * Matrix -- sortable, row and column removable
  * Author: Hong Wang
  */
+
+import {functor} from './utils';
+
 export default function matrix() {
   var matrix = [];
   var row_ids = []; //index is matrix's row index, and values id
@@ -336,8 +339,16 @@ export default function matrix() {
     return matrix[r_index][c_index];
   }
 
+  function cell_value_by_index(r_index, c_index) {
+    return cell_value(cell(r_index, c_index));
+  }
+
   function cell_by_id(r_id, c_id) {
     return matrix[row_indexes[r_id]][col_indexes[c_id]];
+  }
+
+  function cell_value_by_id(r_id, c_id) {
+    return cell_value(cell_by_id(r_id, c_id));
   }
 
   function is_row_active(index) {
@@ -377,11 +388,7 @@ export default function matrix() {
   };
   ret.cell_value = function(_) {
     if (arguments.length > 0) {
-      if (typeof _ === 'function') cell_value = _;
-      else
-        cell_value = function(d) {
-          return d;
-        };
+      cell_value = functor(_);
       return ret;
     } else return cell_value;
   };
@@ -413,6 +420,8 @@ export default function matrix() {
   ret.col_id = col_id;
   ret.cell = cell;
   ret.cell_by_id = cell_by_id;
+  ret.cell_value_by_index = cell_value_by_index;
+  ret.cell_value_by_id = cell_value_by_id;
   ret.is_row_active = is_row_active;
   ret.is_col_active = is_col_active;
   ret.is_row_id_active = is_row_id_active;

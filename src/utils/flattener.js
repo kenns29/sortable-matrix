@@ -4,8 +4,11 @@ import functor from './functor';
 export default function(_matrix) {
   let matrix = _matrix || Matrix();
   let boundary = {x0: -1, x1: -1, y0: -1, y1: -1};
-  let value_accessor = functor();
+  let value_accessor = null;
   function cells() {
+    if (!value_accessor) {
+      value_accessor = matrix.cell_value();
+    }
     const r_cells = [];
     const row_id_order = matrix.row_id_order();
     const col_id_order = matrix.col_id_order();
