@@ -7,7 +7,7 @@ export default function links2generator(_links) {
     d[e]
   );
   let value_accessor = d => d.value;
-  let null_value = 0;
+  let null_value = functor(0);
 
   const generate = function() {
     const matrix_data = [],
@@ -34,7 +34,8 @@ export default function links2generator(_links) {
     const [r, l] = [row_ids, col_ids].map(d => d.length);
     for (let i = 0; i < r; i++)
       for (let j = 0; j < l; j++)
-        if (matrix_data[i][j] === undefined) matrix_data[i][j] = null_value;
+        if (matrix_data[i][j] === undefined)
+          matrix_data[i][j] = null_value(row_ids[i], col_ids[j]);
     return matrix()
       .row_ids(row_ids)
       .col_ids(col_ids)
@@ -59,7 +60,9 @@ export default function links2generator(_links) {
       : value_accessor;
   };
   generate.null = function(_) {
-    return arguments.length ? ((null_value = _), generate) : null_value;
+    return arguments.length
+      ? ((null_value = functor(_)), generate)
+      : null_value;
   };
   return generate;
 }
